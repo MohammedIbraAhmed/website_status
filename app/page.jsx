@@ -95,7 +95,7 @@ export default function Home() {
         {/* Darker background for dark mode */}
         <main className="flex-grow max-w-3xl bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-lg shadow-lg dark:shadow-indigo-900/30 mb-8 transition-colors duration-300">
           <h1 className="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-gray-100">
-            Website Status Checker
+            Is It Working?
           </h1>
 
           <form

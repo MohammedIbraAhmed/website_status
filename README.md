@@ -1,4 +1,4 @@
-# Website Status Checker
+# Is It Working?
 
 A simple Next.js application that checks if websites are online and captures screenshots.
 
