@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
 // Basic URL validation
 function isValidUrl(string) {
@@ -24,16 +25,28 @@ export async function POST(request) {
     }
 
     // --- Puppeteer Launch ---
-    // IMPORTANT: puppeteer-core requires a compatible browser installation.
-    // If this fails, you might need to specify executablePath:
-    // e.g., executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' (Windows)
-    // or '/usr/bin/google-chrome' (Linux)
-    browser = await puppeteer.launch({
-      headless: true, // Run in background
-      args: ["--no-sandbox", "--disable-setuid-sandbox"], // Common args for server environments
-      executablePath:
-        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe", // Specify Chrome path for Windows
-    });
+    // Use different configuration for development and production (Vercel)
+    const isProduction = process.env.NODE_ENV === "production";
+
+    const options = isProduction
+      ? {
+          args: chromium.args,
+          defaultViewport: chromium.defaultViewport,
+          executablePath: await chromium.executablePath(),
+          headless: chromium.headless,
+          ignoreHTTPSErrors: true,
+        }
+      : {
+          headless: true,
+          args: ["--no-sandbox", "--disable-setuid-sandbox"],
+          executablePath:
+            process.env.CHROME_EXECUTABLE_PATH ||
+            (process.platform === "win32"
+              ? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+              : "/usr/bin/google-chrome"),
+        };
+
+    browser = await puppeteer.launch(options);
 
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 720 }); // Set a reasonable viewport
