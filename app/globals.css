@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* RESET ALL STYLES - LIGHT MODE BY DEFAULT */
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff !important;
+  color: #121212 !important;
+}
+
+/* Override the gradient background for light mode */
+.bg-gradient-to-br {
+  background: white !important;
+  background-image: none !important;
+}
+
+/* Only apply dark styles when the .dark class is present */
+html.dark {
+  background-color: #121212 !important;
+  color: #ffffff !important;
+}
+
+html.dark .bg-gradient-to-br {
+  background: #121212 !important;
+  background-image: linear-gradient(
+    to bottom right,
+    #1f2937,
+    #111827,
+    #312e81
+  ) !important;
+}
+
+/* Force ALL background elements to be white in light mode */
+.bg-white,
+.bg-gray-50\/80,
+.bg-gray-200\/50,
+main,
+aside,
+.min-h-screen,
+div[class*="bg-gray"] {
+  background-color: #ffffff !important;
+}
+
+/* Force dark backgrounds only when dark class is present */
+html.dark .bg-white,
+html.dark .bg-gray-800,
+html.dark .bg-gray-900,
+html.dark main,
+html.dark .min-h-screen {
+  background-color: #121212 !important;
+}
+
+html.dark aside,
+html.dark div[class*="bg-gray"] {
+  background-color: #1f2937 !important;
+}
+
+/* Text colors for light mode - make all text dark */
+.text-gray-100,
+.text-gray-200,
+.text-gray-400,
+.text-gray-500,
+.text-gray-800,
+.text-gray-900 {
+  color: #1a202c !important;
+}
+
+/* Text colors for dark mode - make all text light */
+html.dark .text-gray-100,
+html.dark .text-gray-200,
+html.dark .text-gray-800,
+html.dark .text-gray-900 {
+  color: #f0f0f0 !important;
+}
+
+html.dark .text-gray-400,
+html.dark .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+/* Make form elements light in light mode */
+input,
+button {
+  background-color: #ffffff !important;
+  color: #1a202c !important;
+  border-color: #e5e7eb !important;
+}
+
+html.dark input {
+  background-color: #1f2937 !important;
+  color: #f0f0f0 !important;
+  border-color: #4b5563 !important;
+}
+
+/* Ensure buttons retain their colors */
+button[class*="bg-green"] {
+  background-color: #16a34a !important;
+  color: white !important;
+}
+
+html.dark button[class*="bg-green"] {
+  background-color: #15803d !important;
+  color: white !important;
 }

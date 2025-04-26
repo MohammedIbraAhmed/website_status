@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { Providers } from "./providers"; // Import the Providers component
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,10 +20,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      {/* Remove suppressHydrationWarning if Providers handles mounting check */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Providers>{children}</Providers> {/* Wrap children with Providers */}
       </body>
     </html>
   );
